@@ -81,6 +81,7 @@ def send_email(attachment_path):
         print(f'Email sent to {RECIPIENT}')
 
 def main():
+    print(EMAIL_HOST)
     # Connect to the email server
     mail = imaplib.IMAP4_SSL(EMAIL_HOST, EMAIL_PORT)
     mail.login(EMAIL_USER, EMAIL_PASS)
