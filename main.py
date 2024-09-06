@@ -127,7 +127,7 @@ def main():
     
     # Body of the email
     body = "Hi"
-    part1 = MIMEText(text, "plain")
+    part1 = MIMEText(body, "plain")
     message.attach(part1)
     
     try:
