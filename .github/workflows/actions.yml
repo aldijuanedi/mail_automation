@@ -32,7 +32,7 @@ jobs:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           RECIPIENT: ${{ secrets.RECIPIENT }}
           SMTP_PORT: 587
-          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_SERVER: "smtp.gmail.com"
           SUBJECT: ${{ secrets.SUBJECT }}
           
       - name: commit files
