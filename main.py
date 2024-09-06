@@ -7,6 +7,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 import os
+import logging
+import logging.handlers
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
