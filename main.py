@@ -140,7 +140,7 @@ def main():
         server.login(RECIPIENT, EMAIL_PASS)
         
         # Send the email
-        server.sendmail(RECIPIENT, RECIPIENT, msg.as_string())
+        server.sendmail(RECIPIENT, RECIPIENT, msg)
         print(f"Email sent to {RECIPIENT}")
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
