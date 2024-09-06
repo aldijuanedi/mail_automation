@@ -23,16 +23,14 @@ logger.addHandler(logger_file_handler)
 try:
     # Email settings for extracting
     EMAIL_HOST = os.environ["EMAIL_HOST"]
-    EMAIL_PORT = os.environ["EMAIL_PORT"]
+    EMAIL_PORT = int(os.environ["EMAIL_PORT"])
     EMAIL_USER = os.environ["EMAIL_USER"]
     EMAIL_PASS = os.environ["EMAIL_PASS"]
     SUBJECT = os.environ["SUBJECT"]
 
     # Email settings for sending
     SMTP_SERVER = os.environ["SMTP_SERVER"]
-    SMTP_PORT = os.environ["SMTP_PORT"]
-    SMTP_USER = os.environ["SMTP_USER"]
-    SMTP_PASS = os.environ["SMTP_PASS"]
+    SMTP_PORT = int(os.environ["SMTP_PORT"])
     RECIPIENT = os.environ["RECIPIENT"]
 except KeyError:
     SOME_SECRET = "Token not available!"
@@ -61,7 +59,7 @@ def merge_pdfs(pdf_list, output_filename):
 def send_email(attachment_path):
     # Create the email
     msg = MIMEMultipart()
-    msg['From'] = SMTP_USER
+    msg['From'] = EMAIL_USER
     msg['To'] = RECIPIENT
     msg['Subject'] = 'Merged PDF Document'
     
@@ -76,8 +74,8 @@ def send_email(attachment_path):
     # Send the email
     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
         server.starttls()  # Secure the connection
-        server.login(SMTP_USER, SMTP_PASS)
-        server.sendmail(SMTP_USER, RECIPIENT, msg.as_string())
+        server.login(EMAIL_USER, EMAIL_PASS)
+        server.sendmail(EMAIL_USER, RECIPIENT, msg.as_string())
         print(f'Email sent to {RECIPIENT}')
 
 def main():
