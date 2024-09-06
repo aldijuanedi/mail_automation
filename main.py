@@ -120,7 +120,7 @@ def send_email(attachment_path):
 
 def main():
     # Create the email
-    msg = MIMEMultipart()
+    msg = MIMEMultipart("alternative")
     msg['From'] = EMAIL_USER
     msg['To'] = RECIPIENT
     msg['Subject'] = "Hello"
@@ -128,7 +128,7 @@ def main():
     # Body of the email
     body = "Hi"
     part1 = MIMEText(body, "plain")
-    message.attach(part1)
+    msg.attach(part1)
     
     try:
         # Connect to the SMTP server
@@ -141,7 +141,7 @@ def main():
         server.login(RECIPIENT, EMAIL_PASS)
         
         # Send the email
-        server.sendmail(RECIPIENT, RECIPIENT, message.as_string())
+        server.sendmail(RECIPIENT, RECIPIENT, msg.as_string())
         print(f"Email sent to {RECIPIENT}")
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
