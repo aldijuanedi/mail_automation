@@ -64,7 +64,7 @@ def send_email(attachment_path):
     msg['From'] = EMAIL_USER
     msg['To'] = RECIPIENT
     msg['Subject'] = 'Merged PDF Document'
-    
+    print(EMAIL_USER)
     # Attach the file
     part = MIMEBase('application', 'octet-stream')
     with open(attachment_path, 'rb') as file:
@@ -74,7 +74,7 @@ def send_email(attachment_path):
     msg.attach(part)
     
     # Send the email
-    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+    with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
         server.starttls()  # Secure the connection
         server.login(EMAIL_USER, EMAIL_PASS)
         server.sendmail(EMAIL_USER, RECIPIENT, msg.as_string())
