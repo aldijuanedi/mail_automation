@@ -24,16 +24,16 @@ jobs:
           pip install -r requirements.txt
           
       - name: execute py script # run main.py
+        run: python main.py
         env:
           EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+          EMAIL_PORT: 993
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           RECIPIENT: ${{ secrets.RECIPIENT }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_PORT: 587
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SUBJECT: ${{ secrets.SUBJECT }}
-        run: python main.py
           
       - name: commit files
         run: |
