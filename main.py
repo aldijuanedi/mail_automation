@@ -130,17 +130,24 @@ def main():
     msg.attach(MIMEText(body, 'plain'))
     
     try:
-        # Connect to the SMTP server and send the email
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()  # Start TLS for security
-            server.login(RECIPIENT, EMAIL_PASS)
-            server.sendmail(EMAIL_USER, RECIPIENT, msg.as_string())
-            print(f"Email sent to {RECIPIENT}")
+        # Connect to the SMTP server
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server.ehlo()  # Identify yourself to the server
+        server.starttls()  # Secure the connection
+        server.ehlo()  # Re-identify as an encrypted connection
+
+        # Log in to the server
+        server.login(RECIPIENT, EMAIL_PASS)
+        
+        # Send the email
+        server.sendmail(RECIPIENT, RECIPIENT, msg.as_string())
+        print(f"Email sent to {RECIPIENT}")
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
-
     finally:
+        # Close the connection
         server.quit()
+
 
 if __name__ == '__main__':
     main()
