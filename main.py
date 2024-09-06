@@ -81,36 +81,40 @@ def send_email(attachment_path):
         print(f'Email sent to {RECIPIENT}')
 
 def main():
-    print(EMAIL_HOST)
-    # Connect to the email server
-    mail = imaplib.IMAP4_SSL(EMAIL_HOST, EMAIL_PORT)
-    mail.login(EMAIL_USER, EMAIL_PASS)
-    mail.select('inbox')
-    
-    # Search for emails with the specific subject
-    result, data = mail.search(None, f'SUBJECT "{SUBJECT}"')
-    email_ids = data[0].split()
-    
-    for email_id in email_ids:
-        result, data = mail.fetch(email_id, '(RFC822)')
-        raw_email = data[0][1]
-        msg = email.message_from_bytes(raw_email)
+    try:
+        # Connect to the Outlook IMAP server
+        mail = imaplib.IMAP4_SSL(EMAIL_HOST, EMAIL_PORT)
+        mail.login(EMAIL_USER, EMAIL_PASS)
+        mail.select('inbox')
         
-        # Get PDF attachments
-        pdf_attachments = get_attachments(msg)
+        # Search for emails with the specific subject
+        result, data = mail.search(None, f'SUBJECT "{SUBJECT}"')
+        email_ids = data[0].split()
         
-        # Merge PDFs if there are any
-        if pdf_attachments:
-            merged_pdf_path = 'merged_output.pdf'
-            merge_pdfs(pdf_attachments, merged_pdf_path)
-            print('PDFs merged and saved as merged_output.pdf')
+        for email_id in email_ids:
+            result, data = mail.fetch(email_id, '(RFC822)')
+            raw_email = data[0][1]
+            msg = email.message_from_bytes(raw_email)
             
-            # Send the merged PDF via email
-            send_email(merged_pdf_path)
-        else:
-            print('No PDF attachments found.')
-
-    mail.logout()
+            # Get PDF attachments
+            pdf_attachments = get_attachments(msg)
+            
+            # Merge PDFs if there are any
+            if pdf_attachments:
+                merged_pdf_path = 'merged_output.pdf'
+                merge_pdfs(pdf_attachments, merged_pdf_path)
+                print('PDFs merged and saved as merged_output.pdf')
+                
+                # Send the merged PDF via Gmail
+                send_email(merged_pdf_path)
+            else:
+                print('No PDF attachments found.')
+                logger.info('No PDF attachments found.')
+        
+        mail.logout()
+    except Exception as e:
+        logger.error(f"Error in main function: {str(e)}")
+        raise
 
 if __name__ == '__main__':
     main()
