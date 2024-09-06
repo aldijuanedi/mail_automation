@@ -25,14 +25,14 @@ logger.addHandler(logger_file_handler)
 try:
     # Email settings for extracting
     EMAIL_HOST = os.environ["EMAIL_HOST"]
-    EMAIL_PORT = int(os.environ["EMAIL_PORT"])
+    EMAIL_PORT = os.environ["EMAIL_PORT"]
     EMAIL_USER = os.environ["EMAIL_USER"]
     EMAIL_PASS = os.environ["EMAIL_PASS"]
     SUBJECT = os.environ["SUBJECT"]
 
     # Email settings for sending
     SMTP_SERVER = os.environ["SMTP_SERVER"]
-    SMTP_PORT = int(os.environ["SMTP_PORT"])
+    SMTP_PORT = os.environ["SMTP_PORT"]
     RECIPIENT = os.environ["RECIPIENT"]
 except KeyError:
     SOME_SECRET = "Token not available!"
