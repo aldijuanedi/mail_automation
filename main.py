@@ -9,6 +9,8 @@ from email import encoders
 import os
 import logging
 import logging.handlers
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
