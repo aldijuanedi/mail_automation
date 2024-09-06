@@ -131,13 +131,14 @@ def main():
     
     try:
         # Connect to the SMTP server and send the email
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()  # Start TLS for security
-        server.login(RECIPIENT, EMAIL_PASS)
-        server.sendmail(RECIPIENT, RECIPIENT, msg.as_string())
-        print(f"Email sent to {RECIPIENT}")
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()  # Start TLS for security
+            server.login(RECIPIENT, EMAIL_PASS)
+            server.sendmail(EMAIL_USER, RECIPIENT, msg.as_string())
+            print(f"Email sent to {RECIPIENT}")
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
+
     finally:
         server.quit()
 
