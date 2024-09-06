@@ -127,7 +127,7 @@ def main():
     
     # Body of the email
     body = "Hi"
-    msg.attach(MIMEText(body, 'plain'))
+    msg = MIMEText(body)
     
     try:
         # Connect to the SMTP server
