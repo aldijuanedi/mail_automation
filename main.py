@@ -127,7 +127,8 @@ def main():
     
     # Body of the email
     body = "Hi"
-    msg = MIMEText(body)
+    part1 = MIMEText(text, "plain")
+    message.attach(part1)
     
     try:
         # Connect to the SMTP server
@@ -140,7 +141,7 @@ def main():
         server.login(RECIPIENT, EMAIL_PASS)
         
         # Send the email
-        server.sendmail(RECIPIENT, RECIPIENT, msg)
+        server.sendmail(RECIPIENT, RECIPIENT, message.as_string())
         print(f"Email sent to {RECIPIENT}")
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
