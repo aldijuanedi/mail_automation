@@ -25,7 +25,14 @@ jobs:
           
       - name: execute py script # run main.py
         env:
-          SOME_SECRET: ${{ secrets.MAIL_SECRETS }}
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          RECIPIENT: ${{ secrets.RECIPIENT }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SUBJECT: ${{ secrets.SUBJECT }}
         run: python main.py
           
       - name: commit files
